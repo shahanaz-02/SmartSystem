@@ -18,7 +18,7 @@ def generate_study_plan(title: str, subject: str, deadline: str) -> str:
     Keep it motivating and specific. Max 8 days.
     """
     response = client.chat.completions.create(
-        model="llama3-70b-8192",
+        model="llama-3.3-70b-versatile",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=600
     )

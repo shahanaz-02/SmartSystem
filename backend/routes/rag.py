@@ -10,6 +10,7 @@ import sys, os, shutil, uuid
 # Point to ai-rag folder
 sys.path.append(os.path.join(os.path.dirname(__file__), "../../ai-rag"))
 
+
 router = APIRouter(prefix="/api/rag", tags=["RAG"])
 
 
