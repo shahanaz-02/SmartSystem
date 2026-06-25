@@ -2,7 +2,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { api } from "@../../lib/api"
+import { api } from "@/lib/api"
 import { GraduationCap } from "lucide-react"
 
 export default function LoginPage() {
