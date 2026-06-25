@@ -1,0 +1,40 @@
+{
+  "name": "CampusFlow Notice Summary",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "notice",
+        "method": "POST"
+      },
+      "id": "1",
+      "name": "Notice Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [300, 300]
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json[\"chat_id\"]}}",
+        "text": "📋 CampusFlow Notice\n\n{{$json[\"summary\"]}}\n\n📅 Event Date: {{$json[\"event_date\"] || 'Not specified'}}"
+      },
+      "id": "2",
+      "name": "Send Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [600, 300]
+    }
+  ],
+  "connections": {
+    "Notice Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
