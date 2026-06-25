@@ -1,0 +1,47 @@
+import os
+import uuid
+from groq import Groq
+from dotenv import load_dotenv
+from chroma_store import search, add_document
+
+load_dotenv()
+
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
+def ask(question: str) -> str:
+    # Step 1: Find relevant chunks from ChromaDB
+    relevant_chunks = search(question, n_results=3)
+
+    if not relevant_chunks:
+        return "No relevant information found. Please upload study material or notices first."
+
+    # Step 2: Build context from chunks
+    context = "\n\n".join(relevant_chunks)
+
+    # Step 3: Send to Groq with context
+    prompt = f"""You are a helpful assistant for engineering students.
+Answer the question using ONLY the context provided below.
+If the answer is not in the context, say "I couldn't find this in the uploaded material."
+
+Context:
+{context}
+
+Question: {question}
+
+Answer:"""
+
+    response = client.chat.completions.create(
+       model="llama-3.3-70b-versatile",
+        messages=[{"role": "user", "content": prompt}],
+        max_tokens=500
+    )
+
+    return response.choices[0].message.content
+
+
+def add_text(text: str, metadata: dict):
+    add_document(
+        text=text,
+        metadata=metadata,
+        doc_id=str(uuid.uuid4())
+    )
