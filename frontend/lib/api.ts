@@ -1,4 +1,4 @@
-const BASE_URL = "https://smartsystem-utr6.onrender.com/api"
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://smartsystem-utr6.onrender.com/api"
 
 const getToken = () => localStorage.getItem("token") || ""
 
