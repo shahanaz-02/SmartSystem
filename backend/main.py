@@ -15,12 +15,11 @@ app = FastAPI(
 # Allow frontend to connect
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000","https://smart-system-zeta.vercel.app"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # Register all routes
 app.include_router(students.router)
 app.include_router(tasks.router)
